@@ -1,0 +1,121 @@
+<html>
+	<head>
+		<title>Parallax</title>
+		<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+		
+		<style type="text/css">
+			body{
+				margin: 0;
+				padding: 0;
+			}
+			ul{
+				margin: 0;
+				padding: 0;
+			}
+			ul li{
+				list-style: none;
+				overflow: hidden;
+				height: 400px; /*100px of movement*/
+				position: relative;
+			}
+			ul li .subcontent{
+				position: absolute;
+				top: 100px;
+				left: 100px;
+				color: white;
+				font-family: sans-serif;
+			}
+			h1{
+				font-size: 70px;
+				margin-bottom: 0px;
+			}
+			h2{
+				font-size: 56px;
+				margin-bottom: 0px;
+			}
+			.parallax-background{
+				height: 500px;
+			}
+			.first{
+				background-image: url('img/1.jpg');
+				background-position: (50%, 100%);
+			}
+			.second{
+				background-image: url('img/2.jpg');
+				background-position: (50%, 100%);
+			}
+			.third{
+				background-image: url('img/3.jpg');
+				background-position: (50%, 100%);
+			}
+			.fourth{
+				background-image: url('img/4.jpg');
+				background-position: (50%, 100%);
+			}
+		</style>
+	</head>
+
+	<body>
+
+
+		<ul class="parallax">
+			<li>
+				<div class="parallax-background first"></div>
+				<div class="subcontent">
+					<h1>Parallax Peonies</h1>
+					<h2>peonies that are parallax.</h2>
+				</div>
+			</li>
+			<li>
+				<div class="parallax-background second"></div>
+			</li>
+			<li>
+				<div class="parallax-background third"></div>
+			</li>
+			<li>
+				<div class="parallax-background fourth"></div>
+			</li>
+		</ul>
+
+
+	<script>
+
+		(function($){
+
+			var $container = $('.parallax');
+			var $divs = $container.find('div.parallax-background');
+			var thingBeingScrolled = document.body;
+			var liHeight = $divs.eq(0).closest('li').height();
+			var diffHeight = $divs.eq(0).height() - liHeight;
+			var i, len, div, offset, scroll, top;
+
+			var render = function(){
+
+				top = thingBeingScrolled.scrollTop;
+				
+				for(i = 0, len = $divs.length; i< len; i++){
+					
+					div = $divs[i];
+
+					offset = $(div).offset().top;
+
+					scroll = Math.round(((top - offset) / liHeight) * diffHeight);
+
+					div.style.webkitTransform = 'translate3d(0px,' + scroll + 'px, 0px)'; 
+
+				}
+
+			};
+
+			(function loop(){
+				requestAnimationFrame(loop);
+				render();
+			})();
+
+		})(jQuery);
+
+	</script>
+
+	</body>
+
+</html>
